@@ -1332,7 +1332,19 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
         pageController.segmentedControlItems = [readerConfig.localizedContentsTitle, readerConfig.localizedHighlightsTitle]
 
         let nav = UINavigationController(rootViewController: pageController)
-        present(nav, animated: true, completion: nil)
+        nav.view.bounds = CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.height)
+        nav.preferredContentSize = CGSize.init(width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.height)
+        nav.modalPresentationStyle = .custom
+        animator = ZFModalTransitionAnimator(modalViewController: nav)
+        animator.isDragable = true
+        animator.bounces = false
+        animator.behindViewAlpha = 0.4
+        animator.behindViewScale = 1
+        animator.transitionDuration = 0.6
+        animator.direction = ZFModalTransitonDirection.left
+
+        nav.transitioningDelegate = animator
+        present(nav, animated: true, completion: nil)                 
     }
 
     /**
